@@ -1,0 +1,10 @@
+Alias,URL,Is_ShapeFile,Is_Zip,Extract_FileName,Update_Interval
+world_covid_data,https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv,FALSE,FALSE,,1
+us_covid_data,https://data.cdc.gov/api/views/vbim-akqf/rows.csv?accessType=DOWNLOAD,FALSE,FALSE,,1
+us_covid_vaccinations,https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/us_state_vaccinations.csv,FALSE,FALSE,,1
+world_covid_vaccinations,https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv,FALSE,FALSE,,1
+world_locations,https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/locations.csv,FALSE,FALSE,,365
+world_countries_map,https://opendata.arcgis.com/datasets/2b93b06dc0dc4e809d3c8db5cb96ba69_0.zip,TRUE,TRUE,World_Countries__Generalized_.shp,365
+us_states_map,https://www.weather.gov/source/gis/Shapefiles/County/s_11au16.zip,TRUE,TRUE,s_11au16.shp,365
+world_population,https://population.un.org/wpp/Download/Files/1_Indicators%20(Standard)/CSV_FILES/WPP2019_TotalPopulationBySex.csv,FALSE,FALSE,,365
+us_population,https://www2.census.gov/programs-surveys/popest/datasets/2010-2020/national/totals/nst-est2020.csv,FALSE,FALSE,,365
