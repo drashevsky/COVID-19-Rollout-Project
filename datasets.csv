@@ -1,6 +1,8 @@
 Alias,URL,Is_ShapeFile,Is_Zip,Extract_FileName,Update_Interval
 world_covid_data,https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/owid-covid-data.csv,FALSE,FALSE,,1
-us_covid_data,https://data.cdc.gov/api/views/vbim-akqf/rows.csv?accessType=DOWNLOAD,FALSE,FALSE,,1
+us_covid_data,https://data.cdc.gov/api/views/9mfq-cb36/rows.csv?accessType=DOWNLOAD,FALSE,FALSE,,1
+us_covid_age_deaths,https://data.cdc.gov/api/views/9bhg-hcku/rows.csv?accessType=DOWNLOAD,FALSE,FALSE,,1
+us_covid_ethnicity_deaths,https://docs.google.com/spreadsheets/d/e/2PACX-1vS8SzaERcKJOD_EzrtCDK1dX1zkoMochlA9iHoHg_RSw3V8bkpfk1mpw4pfL5RdtSOyx_oScsUtyXyk/pub?gid=43720681&single=true&output=csv,FALSE,FALSE,,1
 us_covid_vaccinations,https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/us_state_vaccinations.csv,FALSE,FALSE,,1
 world_covid_vaccinations,https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv,FALSE,FALSE,,1
 world_locations,https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/locations.csv,FALSE,FALSE,,365
