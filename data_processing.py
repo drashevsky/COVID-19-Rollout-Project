@@ -8,17 +8,55 @@ import numpy as np
 
 import data_manager
 
-# world_vaccinations
-# world_population
-
+WORLD_IDENTIFIERS = 'world_country_identifiers.csv'
 STATE_IDENTIFIERS = 'us_state_identifiers.csv'
 
-def get_identifier_mapping(csv_ids):
+
+def consolidate_world_data(data):
     """
     Method Description
     """
 
-    return {item[0]: item[1] for item in csv_ids.to_dict('split')['data']}
+    # Get country identifiers
+    world_ids = pd.read_csv(WORLD_IDENTIFIERS)
+    world_ids_mapping = get_identifier_mapping(world_ids)
+
+    # Merge country case and vaccination data
+    world_data = process_world_data(data)
+
+    # Merge consolidated dataset with country map data
+    world_map = data['world_countries_map']
+    world_map['ISO'].replace(world_ids_mapping, inplace = True)
+    world_data = merge_geographic_data(world_data, world_map, 'iso_code', 'ISO')
+    world_data = world_data.drop(columns = 'ISO')
+
+    return world_data
+
+
+def consolidate_us_data(data):
+    """
+    Method Description
+    """
+
+    # Get state identifiers
+    state_ids = pd.read_csv(STATE_IDENTIFIERS)
+
+    # Merge state case and vaccination data
+    us_data = process_us_data(data, state_ids)
+
+    # Merge death data for age and ethnicity by state
+    us_age_ethnicity_deaths_data = process_us_age_ethnicity_data(data, state_ids)
+
+    # Merge case, vaccination, and age/ethnicity data together
+    us_all_data = pd.merge_ordered(us_data, us_age_ethnicity_deaths_data,  how='outer', left_on=['submission_date', 'state'], right_on=['Date', 'State'])
+    us_all_data = us_all_data.drop(columns = ['Date', 'State'])
+
+    # Merge consolidated dataset with state map data
+    us_map = data['us_states_map']
+    us_all_data = merge_geographic_data(us_all_data, us_map, 'state', 'STATE')
+    us_all_data = us_all_data.drop(columns = 'STATE')
+
+    return us_all_data
 
 def process_world_data(data):
     """
@@ -31,6 +69,7 @@ def process_world_data(data):
 
     # Merge and return data
     return pd.merge(world_cases, world_vaccinations,  how='left', on=['location', 'date', 'iso_code'])
+
 
 def process_us_data(data, state_ids):
     """
@@ -94,6 +133,22 @@ def process_us_age_ethnicity_data(data, state_ids):
     return us_age_ethnicity_data
 
 
+def get_identifier_mapping(csv_ids):
+    """
+    Method Description
+    """
+
+    return {item[0]: item[1] for item in csv_ids.to_dict('split')['data']}
+
+
+def merge_geographic_data(data, geodata, data_locations_col, geodata_locations_col):
+    """
+    Method Description
+    """
+
+    return pd.merge(data, geodata[[geodata_locations_col, 'geometry']],  how='left', left_on = data_locations_col, right_on = geodata_locations_col)    
+
+    
 def main():
     """
     Method Description
@@ -103,28 +158,19 @@ def main():
     data_manager.update_datasets(datasets)
     data = data_manager.retrieve_datasets(datasets)
 
-    world_data = process_world_data(data)
+    world_c_data = consolidate_world_data(data)
+    us_c_data = consolidate_us_data(data)
 
-    state_ids = pd.read_csv(STATE_IDENTIFIERS)
-    us_data = process_us_data(data, state_ids)
-    us_age_ethnicity_deaths_data = process_us_age_ethnicity_data(data, state_ids)
-    us_all_data = pd.merge_ordered(us_data, us_age_ethnicity_deaths_data,  how='outer', left_on=['submission_date', 'state'], right_on=['Date', 'State'])
-    us_all_data = us_all_data.drop(columns = ['Date', 'State'])
+    print(world_c_data)
+    print(world_c_data.columns)
+    print(us_c_data)
+    print(us_c_data.columns)
 
-    world_map = data['world_countries_map']
-    us_map = data['us_states_map']
+    #print(us_data)
+    #print(us_data.columns)
+    #print(us_age_ethnicity_deaths_data)
+    #print(us_age_ethnicity_deaths_data.columns)
 
-    print(world_data)
-    print(world_data.columns)
-    print(us_data)
-    print(us_data.columns)
-    print(us_age_ethnicity_deaths_data)
-    print(us_age_ethnicity_deaths_data.columns)
-    print(us_all_data)
-    print(us_all_data.columns)
-    print(world_map)
-    print(us_map)
-    
 
 if __name__ == "__main__":
     main()
