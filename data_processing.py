@@ -10,6 +10,8 @@ import data_manager
 
 WORLD_IDENTIFIERS = 'world_country_identifiers.csv'
 STATE_IDENTIFIERS = 'us_state_identifiers.csv'
+TARGET_POP_YEAR = 2020
+WORLD_POP_VARIANT = 'Medium'
 
 
 def consolidate_world_data(data):
@@ -17,12 +19,16 @@ def consolidate_world_data(data):
     Method Description
     """
 
-    # Get country identifiers
+    # Get country identifiers, map two letter to three letter ISO codes
     world_ids = pd.read_csv(WORLD_IDENTIFIERS)
     world_ids_mapping = get_identifier_mapping(world_ids)
 
+    print('Processing world COVID case and vaccination data...')
+
     # Merge country case and vaccination data
     world_data = process_world_data(data)
+
+    print('Merging world data with geospatial map...')
 
     # Merge consolidated dataset with country map data
     world_map = data['world_countries_map']
@@ -38,11 +44,15 @@ def consolidate_us_data(data):
     Method Description
     """
 
-    # Get state identifiers
+    # Get state identifiers mapping state names to their postal codes
     state_ids = pd.read_csv(STATE_IDENTIFIERS)
+
+    print('Processing US COVID case and vaccination data...')
 
     # Merge state case and vaccination data
     us_data = process_us_data(data, state_ids)
+
+    print('Processing US death data by age and ethnicity...')
 
     # Merge death data for age and ethnicity by state
     us_age_ethnicity_deaths_data = process_us_age_ethnicity_data(data, state_ids)
@@ -51,12 +61,15 @@ def consolidate_us_data(data):
     us_all_data = pd.merge_ordered(us_data, us_age_ethnicity_deaths_data,  how='outer', left_on=['submission_date', 'state'], right_on=['Date', 'State'])
     us_all_data = us_all_data.drop(columns = ['Date', 'State'])
 
+    print('Merging US data with geospatial map...')
+
     # Merge consolidated dataset with state map data
     us_map = data['us_states_map']
     us_all_data = merge_geographic_data(us_all_data, us_map, 'state', 'STATE')
     us_all_data = us_all_data.drop(columns = 'STATE')
 
     return us_all_data
+
 
 def process_world_data(data):
     """
@@ -131,6 +144,54 @@ def process_us_age_ethnicity_data(data, state_ids):
     us_age_ethnicity_data = pd.merge_ordered(us_ethnicity_deaths, us_age_deaths,  how='outer', on=['Date', 'State'])
 
     return us_age_ethnicity_data
+
+
+def get_world_pop_data(data):
+    """
+    Method Description
+    """
+
+    print('Retrieving world population data...')
+
+    # Load and filter world population data
+    world_pop_data = data['world_population']
+    world_pop_data = world_pop_data[(world_pop_data['Time'] == TARGET_POP_YEAR) & (world_pop_data['Variant'] == WORLD_POP_VARIANT)]
+    world_pop_data = world_pop_data[['Location', 'Time', 'PopTotal']]
+    world_pop_data['PopTotal'] *= 1000
+
+    # Get mapping of country names to ISO codes and two-letter to three-letter ISO codes
+    world_countries = data['world_covid_data'][['location', 'iso_code']]
+    world_countries_mapping = get_identifier_mapping(world_countries)
+    world_ids = pd.read_csv(WORLD_IDENTIFIERS)
+    world_ids_mapping = get_identifier_mapping(world_ids)
+
+    # Filter population data to include only countries in the world COVID cases dataset
+    world_pop_data['Location'].replace(world_countries_mapping, inplace = True)
+    world_pop_data = world_pop_data[world_pop_data['Location'].isin(world_ids['Identifier'])]
+
+    return world_pop_data
+
+
+def get_us_pop_data(data):
+    """
+    Method Description
+    """
+
+    print('Retrieving US population data...')
+
+    # Load and filter US population data
+    us_pop_data = data['us_population']
+    us_pop_data = us_pop_data[['NAME', 'POPESTIMATE2020']]
+
+    # Get US state two-letter ID mappings
+    state_ids = pd.read_csv(STATE_IDENTIFIERS)
+    state_ids_mapping = get_identifier_mapping(state_ids)
+
+    # Filter population data to include only states in the mapping, change to two letter code
+    us_pop_data = us_pop_data[us_pop_data['NAME'].isin(state_ids['Name'])]
+    us_pop_data['NAME'].replace(state_ids_mapping, inplace = True)
+
+    return us_pop_data
 
 
 def get_identifier_mapping(csv_ids):
