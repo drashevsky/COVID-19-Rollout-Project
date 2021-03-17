@@ -1,5 +1,7 @@
 """
-Header
+Daniel Rashevsky
+CSE 163 AE
+This file downloads and manages updates for all datasets in datasets.csv
 """
 
 import pandas as pd
@@ -12,16 +14,16 @@ import datetime
 import shutil
 import os
 
-DATASET_INFO = 'datasets.csv'
-UPDATE_INFO = 'timestamps.csv'
-DATASET_DIR = 'datasets'
+DATASET_INFO = "datasets.csv"
+UPDATE_INFO = "timestamps.csv"
+DATASET_DIR = "datasets"
 DAYS_BETWEEN_UPDATE = 2
 STREAM_CHUNK_SZ = 8192
 
 
 def download_file(metadata_row):
     """
-    Method Description
+    Download a single dataset given by its information, unzip if it is in zip folder
     """
 
     # Get needed file metadata
@@ -31,32 +33,34 @@ def download_file(metadata_row):
     # Generate filenames
     fname = metadata_row["Alias"]
     download_fname = fname + (".csv" if not is_zip else ".zip")
-    save_fname = fname + (".csv" if not is_zip else os.path.splitext(extract_filename)[1])
+    save_fname = fname + (
+        ".csv" if not is_zip else os.path.splitext(extract_filename)[1]
+    )
     print("Downloading " + fname + "...")
 
     # Download file
     with requests.get(metadata_row["URL"], stream=True) as r:
         r.raise_for_status()
-        with open(DATASET_DIR + '/' + download_fname, 'wb') as f:
-            for chunk in r.iter_content(chunk_size=STREAM_CHUNK_SZ): 
+        with open(DATASET_DIR + "/" + download_fname, "wb") as f:
+            for chunk in r.iter_content(chunk_size=STREAM_CHUNK_SZ):
                 f.write(chunk)
 
     # If the file is compressed, extract it
     if is_zip:
         print("Unzipping " + fname + "...")
-        
-        z = zipfile.ZipFile(DATASET_DIR + '/' + download_fname)
+
+        z = zipfile.ZipFile(DATASET_DIR + "/" + download_fname)
         for f in z.infolist():
             f.filename = fname + os.path.splitext(f.filename)[1]
-            z.extract(f, path = DATASET_DIR)
+            z.extract(f, path=DATASET_DIR)
 
         z.close()
-        os.remove(DATASET_DIR + '/' + download_fname)
+        os.remove(DATASET_DIR + "/" + download_fname)
 
 
 def download_files(metadata_frame, timestamps):
     """
-    Method Description
+    Download multiple datasets, given a set of datasets to download and their last update times
     """
 
     # Download every dataset in dataframe
@@ -71,7 +75,7 @@ def download_files(metadata_frame, timestamps):
 
 def check_aliases_exist(metadata_frame):
     """
-    Method description
+    Given a set of datasets to check, checks if datasets specified by datasets.csv are already downloaded
     """
 
     exists = []
@@ -82,17 +86,19 @@ def check_aliases_exist(metadata_frame):
         alias = metadata_frame.loc[i, "Alias"]
         is_zip = metadata_frame.loc[i, "Is_Zip"]
         extract_filename = metadata_frame.loc[i, "Extract_FileName"]
-        fname = alias + (".csv" if not is_zip else os.path.splitext(extract_filename)[1])
+        fname = alias + (
+            ".csv" if not is_zip else os.path.splitext(extract_filename)[1]
+        )
 
         # Check if file exists
-        exists.append(not os.path.exists(DATASET_DIR + '/' + fname))
+        exists.append(not os.path.exists(DATASET_DIR + "/" + fname))
 
     return pd.Series(exists)
 
 
 def get_dataset_info():
     """
-    Method Description
+    Get metadata on all datasets
     """
 
     return pd.read_csv(DATASET_INFO)
@@ -100,7 +106,7 @@ def get_dataset_info():
 
 def update_datasets(metadata_frame):
     """
-    Method Description
+    Given a set of datasets, update them
     """
 
     dir_exists = os.path.isdir(DATASET_DIR)
@@ -112,8 +118,12 @@ def update_datasets(metadata_frame):
 
         # Find stale datasets
         if os.path.exists(UPDATE_INFO):
-            timestamps = pd.read_csv(UPDATE_INFO, parse_dates=["TimeStamp"], index_col = 0)
-            timestamp_deltas = (datetime.datetime.now() - timestamps["TimeStamp"]).dt.days
+            timestamps = pd.read_csv(
+                UPDATE_INFO, parse_dates=["TimeStamp"], index_col=0
+            )
+            timestamp_deltas = (
+                datetime.datetime.now() - timestamps["TimeStamp"]
+            ).dt.days
             timestamp_deltas.index = range(len(timestamp_deltas))
             stale_mask = timestamp_deltas >= metadata_frame["Update_Interval"]
         else:
@@ -139,7 +149,7 @@ def update_datasets(metadata_frame):
 
 def retrieve_datasets(metadata_frame):
     """
-    Method Description
+    Given a set of datasets, search folder and return them as dataframes
     """
 
     data_dict = {}
@@ -153,21 +163,23 @@ def retrieve_datasets(metadata_frame):
         extract_filename = metadata_frame.loc[i, "Extract_FileName"]
 
         # Get filename
-        fname = alias + (".csv" if not is_zip else os.path.splitext(extract_filename)[1])
+        fname = alias + (
+            ".csv" if not is_zip else os.path.splitext(extract_filename)[1]
+        )
 
         # Check if file exists
-        if (os.path.exists(DATASET_DIR + '/' + fname)):
+        if os.path.exists(DATASET_DIR + "/" + fname):
             if is_shapefile:
-                data_dict[alias] = gpd.read_file(DATASET_DIR + '/' + fname)
+                data_dict[alias] = gpd.read_file(DATASET_DIR + "/" + fname)
             else:
-                data_dict[alias] = pd.read_csv(DATASET_DIR + '/' + fname)
+                data_dict[alias] = pd.read_csv(DATASET_DIR + "/" + fname)
 
     return data_dict
 
 
 def main():
     """
-    Method Description
+    Test all methods in data manager
     """
 
     # Test retrieve
@@ -177,14 +189,14 @@ def main():
     # Test no changes
     update_datasets(datasets)
 
-    # Test remove all 
+    # Test remove all
     shutil.rmtree(DATASET_DIR)
     update_datasets(datasets)
 
     # Test remove multiple random
-    os.remove(DATASET_DIR + '/us_states_map.shp')
-    os.remove(DATASET_DIR + '/world_covid_vaccinations.csv')
-    os.remove(DATASET_DIR + '/us_covid_data.csv')
+    os.remove(DATASET_DIR + "/us_states_map.shp")
+    os.remove(DATASET_DIR + "/world_covid_vaccinations.csv")
+    os.remove(DATASET_DIR + "/us_covid_data.csv")
     update_datasets(datasets)
 
     # Print results
