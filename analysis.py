@@ -40,7 +40,7 @@ US_STATS = [
     "65-74 years",
     "75-84 years",
     "85 years and over",
-    "Under 1 year",
+    "Under 1 year"
 ]
 
 
@@ -67,12 +67,9 @@ def analyze_world_data(world_data, world_pop_data):
     filled_world_data[WORLD_STATS] = filled_world_data[WORLD_STATS].fillna(0)
 
     # Find average daily case and vaccination rates for all the data for each country
-    average_per_cap_by_country = filled_world_data.groupby(["iso_code", "location"])[
-        WORLD_STATS
-    ].mean()
-    average_per_cap_by_country = data_processing.merge_geographic_data(
-        average_per_cap_by_country, world_data, "iso_code", "iso_code"
-    )
+    agg_ops = dict.fromkeys(WORLD_STATS, 'mean')
+    agg_ops['geometry'] = 'first'
+    average_per_cap_by_country = filled_world_data.groupby(["iso_code", "location"]).agg(agg_ops)
 
     # Find average daily case and vaccination rates for every day we have data on across countries
     average_per_cap_by_day = filled_world_data.groupby("date")[WORLD_STATS].mean()
@@ -101,10 +98,9 @@ def analyze_us_data(us_data, us_pop_data):
     filled_us_data[US_STATS] = filled_us_data[US_STATS].fillna(0)
 
     # Find average rates for all the data for each state
-    average_per_cap_by_state = filled_us_data.groupby(["state"])[US_STATS].mean()
-    average_per_cap_by_state = data_processing.merge_geographic_data(
-        average_per_cap_by_state, us_data, "state", "state"
-    )
+    agg_ops = dict.fromkeys(US_STATS, 'mean')
+    agg_ops['geometry'] = 'first'
+    average_per_cap_by_state = filled_us_data.groupby(["state"]).agg(agg_ops)
 
     # Find average rates for every day we have data on across states
     average_per_cap_by_day = filled_us_data.groupby("submission_date")[US_STATS].mean()
