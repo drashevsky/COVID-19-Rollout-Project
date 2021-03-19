@@ -2,6 +2,8 @@
 
 This data analysis project was written for my CSE 163 Intermediate Programming class at UW. It was written with the help of the Pandas library in Python. The goal of this project is to analyze the speed of the COVID-19 vaccine rollout across different jurisdictions, and see how it has impacted the virus's spread. There are many variables and players involved in this process, including the effectiveness and reach of distribution networks in different countries and states, as well as who is getting the vaccines and when. 
 
+![Average Daily New Cases and Vaccinations Per Capita for the World](/sample_visualizations/plot_world_avg_daily_new_cases_and_vaccinations_per_capita_over_time.png)
+
 Due to the life-threatening nature of inefficient distribution, stakeholders and the public have a right to clearly understand how quickly the COVID-19 vaccine rollout is progressing. By computing per capita case and vaccination rates across different countries and jurisdictions, and breaking these statistics down by age group and ethnicity in the United States, complex COVID-19 data can be visualized. This will reveal bottlenecks in the process, allowing the application of adequate resources to fixing them.
 
 ## Running the Code
@@ -30,7 +32,8 @@ Install them with:
 
 <br>
 
-When you have finished setting up the environment, run `main.py` to initiate the project. The datasets and visualizations will be output to the `datasets` and `visualizations` folders, respectively.
+When you have finished setting up the environment, run `main.py` to initiate the project. The datasets and visualizations will be output 
+to the `datasets` and `visualizations` folders, respectively.
 
 ## Research Questions
 
@@ -58,7 +61,7 @@ This project was structured in such a way as to allow data to be piped from down
 
 `visualization.py` - Plot line graphs, multiple line graphs, and maps of the analyzed data
 
-`metadata` - a folder containing metadata on all project datasets, and references mapping jurisdiction names to various code formats
+`metadata` - A folder containing metadata on all project datasets, and references mapping jurisdiction names to various code formats
 
 `sample_visualizations` - A folder containing some sample results of running this data analysis project
 
