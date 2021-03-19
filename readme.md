@@ -32,8 +32,7 @@ Install them with:
 
 <br>
 
-When you have finished setting up the environment, run `main.py` to initiate the project. The datasets and visualizations will be output 
-to the `datasets` and `visualizations` folders, respectively.
+When you have finished setting up the environment, run `main.py` to initiate the project. The datasets and visualizations will be output to the `datasets` and `visualizations` folders, respectively.
 
 ## Research Questions
 
@@ -66,7 +65,7 @@ This project was structured in such a way as to allow data to be piped from down
 `sample_visualizations` - A folder containing some sample results of running this data analysis project
 
 ## Datasets
-This project performed the analysis using a variety of datasets:
+
 |Alias                    |URL                                                                                                                                                                    |
 |-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |world_covid_data         |https://github.com/owid/covid-19-data/blob/master/public/data/owid-covid-data.csv                                                                                      |
@@ -81,4 +80,4 @@ This project performed the analysis using a variety of datasets:
 |world_population         |https://population.un.org/wpp/Download/Standard/CSV/                                                                                                                   |
 |us_population            |https://www2.census.gov/programs-surveys/popest/datasets/2010-2020/national/totals/                                                                                    |
 
-The raw dataset URLs can be found in `metadata\datasets.csv`
+*Note: The raw dataset URLs can be found in `metadata\datasets.csv`*
