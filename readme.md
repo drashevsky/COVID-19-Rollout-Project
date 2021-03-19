@@ -8,7 +8,7 @@ Due to the life-threatening nature of inefficient distribution, stakeholders and
 
 *Note: this project has only been tested on Windows 10.*
 
-To run the code, install `Python 3.9`, as well as the latest `pip` version for Python 3. Make sure both are in your environment path.
+To run the code, install `Python 3.9`, as well as the latest `pip` version for Python 3. Make sure both are in your environment `PATH`.
 
 The following command will install all required packages: 
 
@@ -23,6 +23,7 @@ https://www.lfd.uci.edu/~gohlke/pythonlibs/#fiona
 Install them with:
 
 `pip install path/to/gdal.whl`
+
 `pip install path/to/fiona.whl`
 
 When you have finished setting up the environment, run `main.py` to initiate the project.
