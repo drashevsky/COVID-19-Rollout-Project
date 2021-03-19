@@ -15,6 +15,8 @@ import data_processing
 import analysis
 import visualization
 
+DAILY_TRENDS_ENABLED = False
+
 
 def plot_daily_trends(world_results, us_results):
     """
@@ -230,8 +232,12 @@ def main():
     us_pop = data_processing.get_us_pop_data(data)
     us_results = analysis.analyze_us_data(us_c_data, us_pop)
 
-    # Graph all trends
-    plot_daily_trends(world_results[0], us_results[0])
+    # Graph all trends (set DAILY_TRENDS_ENABLED = True for
+    # detailed jurisdiction-by-jurisdiction data)
+
+    if (DAILY_TRENDS_ENABLED):
+        plot_daily_trends(world_results[0], us_results[0])
+
     map_avg_trends(
         world_results[1],
         us_results[1],

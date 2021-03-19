@@ -14,7 +14,7 @@ import datetime
 import shutil
 import os
 
-DATASET_INFO = "datasets.csv"
+DATASET_INFO = "metadata/datasets.csv"
 UPDATE_INFO = "timestamps.csv"
 DATASET_DIR = "datasets"
 DAYS_BETWEEN_UPDATE = 2

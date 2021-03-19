@@ -10,8 +10,8 @@ import numpy as np
 
 import data_manager
 
-WORLD_IDENTIFIERS = "world_country_identifiers.csv"
-STATE_IDENTIFIERS = "us_state_identifiers.csv"
+WORLD_IDENTIFIERS = "metadata/world_country_identifiers.csv"
+STATE_IDENTIFIERS = "metadata/us_state_identifiers.csv"
 TARGET_POP_YEAR = 2020
 WORLD_POP_VARIANT = "Medium"
 
