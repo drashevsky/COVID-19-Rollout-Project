@@ -14,6 +14,8 @@ The following command will install all required packages:
 
     pip install numpy pandas geopandas matplotlib requests zipfile shutil
 
+<br>
+
 A note about `geopandas` on Windows: `geopandas` requires  `fiona`, which depends on `gdal`. They can be found here:
 
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal
@@ -25,6 +27,8 @@ Install them with:
 `pip install path/to/gdal.whl`
 
 `pip install path/to/fiona.whl`
+
+<br>
 
 When you have finished setting up the environment, run `main.py` to initiate the project.
 
