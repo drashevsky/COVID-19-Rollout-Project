@@ -58,7 +58,7 @@ This project was structured in such a way as to allow data to be piped from down
 
 `visualization.py` - Plot line graphs, multiple line graphs, and maps of the analyzed data
 
-`metadata` - a folder containing metadata on all project datasets, and conversion references mapping jurisdiction names to various code formats
+`metadata` - a folder containing metadata on all project datasets, and references mapping jurisdiction names to various code formats
 
 `sample_visualizations` - A folder containing some sample results of running this data analysis project
 
