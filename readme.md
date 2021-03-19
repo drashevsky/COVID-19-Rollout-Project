@@ -30,7 +30,7 @@ Install them with:
 
 <br>
 
-When you have finished setting up the environment, run `main.py` to initiate the project.
+When you have finished setting up the environment, run `main.py` to initiate the project. The datasets and visualizations will be output to the `datasets` and `visualizations` folders, respectively.
 
 ## Research Questions
 
@@ -58,7 +58,7 @@ This project was structured in such a way as to allow data to be piped from down
 
 `visualization.py` - Plot line graphs, multiple line graphs, and maps of the analyzed data
 
-`metadata` - a folder containing metadata on all the datasets used in this project, as well as conversion references mapping jurisdiction name to various jurisdiction code formats
+`metadata` - a folder containing metadata on all project datasets, and conversion references mapping jurisdiction names to various code formats
 
 `sample_visualizations` - A folder containing some sample results of running this data analysis project
 
