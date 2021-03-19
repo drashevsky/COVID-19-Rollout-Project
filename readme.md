@@ -1,8 +1,8 @@
 # COVID-19 Vaccination Rollout Project
 
-This is a data analysis project for my CSE 163 class @ UW. It was written using the Pandas library, in Python. The purpose is to analyze the speed of the COVID-19 vaccine rollout across different jurisdictions, and see if it has impacted its spread. There are many variables and players involved in this process, including the effectiveness and reach of distribution networks in different countries and states, as well as who is getting the vaccines and when. 
+This data analysis project was written for my CSE 163 Intermediate Programming class at UW. It was written with the help of the Pandas library in Python. The goal of this project is to analyze the speed of the COVID-19 vaccine rollout across different jurisdictions, and see how it has impacted the virus's spread. There are many variables and players involved in this process, including the effectiveness and reach of distribution networks in different countries and states, as well as who is getting the vaccines and when. 
 
-Due to the life-threatening nature of inefficient distribution, stakeholders and the public have a right to clearly understand how effectively and quickly the Covid-19 vaccine rollout is progressing. By computing per capita vaccination rates across different countries and jurisdictions, and breaking these statistics down by age group and ethnicity, the complexity of Covid-19 data will be neatly summarized and visualized. Bottlenecks in the process will be revealed, allowing the application of adequate resources to fixing them.
+Due to the life-threatening nature of inefficient distribution, stakeholders and the public have a right to clearly understand how quickly the COVID-19 vaccine rollout is progressing. By computing per capita case and vaccination rates across different countries and jurisdictions, and breaking these statistics down by age group and ethnicity in the United States, complex COVID-19 data can be visualized. This will reveal bottlenecks in the process, allowing the application of adequate resources to fixing them.
 
 ## Running the Code
 
@@ -17,6 +17,7 @@ The following command will install all required packages:
 A note about `geopandas` on Windows: `geopandas` requires  `fiona`, which depends on `gdal`. They can be found here:
 
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#gdal
+
 https://www.lfd.uci.edu/~gohlke/pythonlibs/#fiona
 
 Install them with:
