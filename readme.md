@@ -1,6 +1,6 @@
 # COVID-19 Vaccination Rollout Project
 
-This data analysis project was written for my CSE 163 Intermediate Programming class at UW. It was written with the help of the Pandas library in Python. The goal of this project is to analyze the speed of the COVID-19 vaccine rollout across different jurisdictions, and see how it has impacted the virus's spread. There are many variables and players involved in this process, including the effectiveness and reach of distribution networks in different countries and states, as well as who is getting the vaccines and when. 
+This is a data analysis project, written for my CSE 163 Intermediate Programming class at UW in Python with the help of the Pandas library. The goal of this project is to analyze the speed of the COVID-19 vaccine rollout across different jurisdictions, and see how it has impacted the virus's spread. There are many variables and players involved in this process, including the effectiveness and reach of distribution networks in different countries and states, as well as who is getting the vaccines and when. 
 
 ![Average Daily New Cases and Vaccinations Per Capita for the United States](/sample_visualizations/plot_us_avg_daily_new_cases_and_vaccinations_per_capita_over_time.png)
 
