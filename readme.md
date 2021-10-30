@@ -4,7 +4,7 @@ This is a data analysis project, written for my CSE 163 Intermediate Programming
 
 ![Average Daily New Cases and Vaccinations Per Capita for the United States](/sample_visualizations/7_22_2021/plot_us_avg_daily_new_cases_and_vaccinations_per_capita_over_time.png)
 
-Due to the life-threatening nature of inefficient distribution, stakeholders and the public have a right to clearly understand how quickly the COVID-19 vaccine rollout is progressing. By computing per capita case and vaccination rates across different countries and jurisdictions, and breaking these statistics down by age group and ethnicity in the United States, complex COVID-19 data can be visualized. This will reveal bottlenecks in the process, allowing the application of adequate resources to fixing them.
+Due to the life threatening nature of inefficient distribution, stakeholders and the public have a right to clearly understand how quickly the COVID-19 vaccine rollout is progressing. By computing per capita case and vaccination rates across different countries and jurisdictions, and breaking these statistics down by age group and ethnicity in the United States, complex COVID-19 data can be visualized. This will reveal bottlenecks in the process, allowing the application of adequate resources to fixing them.
 
 ## Running the Code
 
